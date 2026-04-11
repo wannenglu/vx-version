@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>资源地址导航</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <h1 class="text-2xl md:text-3xl font-bold mb-6 text-center">
+        资源地址导航
+      </h1>
+
+      <!-- 搜索 -->
+      <div class="mb-6">
+        <input
+          id="search"
+          placeholder="搜索名称、分类、地址、备注..."
+          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      <!-- 列表 -->
+      <div
+        id="list"
+        class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8"
+      >
+        加载中...
+      </div>
+
+      <!-- 分页 -->
+      <div
+        id="pagination"
+        class="flex flex-wrap justify-center gap-2 mt-4"
+      ></div>
+    </div>
+
+    <script>
+      const pageSize = 12; // 每页12条
+      let currentPage = 1;
+      let allData = [];
+      let filteredData = [];
+
+      // 加载数据
+      async function loadData() {
+        try {
+          const res = await fetch("data.json");
+          const json = await res.json();
+          allData = json.resources || [];
+          filteredData = allData;
+          render();
+        } catch (e) {
+          document.getElementById("list").innerHTML =
+            '<p class="text-red-500">加载失败</p>';
+        }
+      }
+
+      // 渲染列表 + 分页
+      function render() {
+        const total = filteredData.length;
+        const totalPage = Math.ceil(total / pageSize);
+        const start = (currentPage - 1) * pageSize;
+        const list = filteredData.slice(start, start + pageSize);
+
+        const el = document.getElementById("list");
+        if (total === 0) {
+          el.innerHTML =
+            '<div class="col-span-full text-center py-10 text-gray-400">暂无数据</div>';
+        } else {
+          el.innerHTML = list
+            .map(
+              (item) => `
+      <div class="bg-white rounded-xl shadow p-5 hover:shadow-md transition">
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="font-semibold text-lg">${item.name}</h3>
+          <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">${item.category}</span>
+        </div>
+        <p class="text-sm text-gray-500 mb-4 line-clamp-2">${item.desc || "无备注"}</p>
+        <div class="flex justify-between items-center">
+          <a href="${item.url}" target="_blank" class="text-blue-600 hover:underline text-sm">打开</a>
+          <button onclick="copy('${item.url}')" class="text-gray-500 text-sm"><i class="fa fa-copy"></i> 复制</button>
+        </div>
+      </div>
+    `,
+            )
+            .join("");
+        }
+
+        // 分页按钮
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+        for (let i = 1; i <= totalPage; i++) {
+          const btn = document.createElement("button");
+          btn.innerText = i;
+          btn.className = `px-3 py-1.5 rounded border ${
+            i === currentPage
+              ? "bg-blue-500 text-white border-blue-500"
+              : "bg-white hover:bg-gray-100"
+          }`;
+          btn.onclick = () => {
+            currentPage = i;
+            render();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          };
+          pagination.appendChild(btn);
+        }
+      }
+
+      // 复制
+      function copy(url) {
+        navigator.clipboard.writeText(url).then(() => alert("已复制：" + url));
+      }
+
+      // 搜索
+      document.getElementById("search").addEventListener("input", (e) => {
+        const key = e.target.value.toLowerCase();
+        filteredData = allData.filter(
+          (i) =>
+            i.name.toLowerCase().includes(key) ||
+            i.category.toLowerCase().includes(key) ||
+            i.url.toLowerCase().includes(key) ||
+            (i.desc && i.desc.toLowerCase().includes(key)),
+        );
+        currentPage = 1;
+        render();
+      });
+
+      loadData();
+    </script>
+  </body>
+</html>

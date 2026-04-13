@@ -1,94 +1,95 @@
 {
   "resources": [
     {
-      "name": "百度",
-      "category": "搜索",
-      "url": "https://www.baidu.com",
-      "desc": "国内搜索引擎"
+      "name": "4.1.9.17",
+      "category": "白名单",
+      "url": "https://www.alipan.com/s/eFH9CzegUXF",
+      "desc": "- 可发送语音消息；- 修复一些已知问题。其他部分优化：- 语音输入文字模型效果持续优化；- 语音输入文字在笔记场景也可以使用；- 合并转发聊天消息中的文本消息可以右键翻译；- 未完整展示文字的消息，鼠标悬停时可展示完整文字；- 点击「默认表情」中表情后，按向右方向键可复制表情；- 在Windows上，文件消息 > 右键 > 打开方式中也支持用本地应用打开；- 笔记整体排版样式优化；- 网页打印支持预览；- 截图时可画实心矩形和椭圆。备注：还在使用右侧扩展区域版本的，也能更新这个版本继续使用。"
     },
     {
-      "name": "谷歌",
-      "category": "搜索",
-      "url": "https://www.google.com",
-      "desc": "全球搜索引擎"
+      "name": "4.1.8.101",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/p8JmzFufDfG",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "GitHub",
-      "category": "开发",
-      "url": "https://github.com",
-      "desc": "代码托管平台"
+      "name": "4.1.8.96",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/GFAVB8P8CNY",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "菜鸟教程",
-      "category": "学习",
-      "url": "https://www.runoob.com",
-      "desc": "编程学习"
+      "name": "4.1.8.68",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/2X2pbePUBAb",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "掘金",
-      "category": "技术",
-      "url": "https://juejin.cn",
-      "desc": "开发者社区"
+      "name": "4.1.8.65",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/zte7ZHNTkwK",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "知乎",
-      "category": "社区",
-      "url": "https://www.zhihu.com",
-      "desc": "问答社区"
+      "name": "4.1.8.50",
+      "category": "白名单",
+      "url": "https://www.alipan.com/s/d6YR68M9njf",
+      "desc": "- 修复一些已知问题。该版本用于体验以下内测功能：2、正在浏览窗口(内测体验功能，正式版可能移除) - 在聊天窗口旁扩展了浏览区域，公众号、笔记、链接等内容会在该区域内打开；3、侧边栏新增发现页(内测体验功能，正式版可能移除) - 侧边栏的朋友圈、视频号、搜一搜、小程序等业务入口统一收入了新的发现页。"
     },
     {
-      "name": "B站",
-      "category": "视频",
-      "url": "https://www.bilibili.com",
-      "desc": "动漫、学习、视频"
+      "name": "4.1.8.48",
+      "category": "白名单",
+      "url": "https://www.alipan.com/s/ZZURLVNngDs",
+      "desc": "- 修复一些已知问题。该版本用于体验以下内测功能：2、正在浏览窗口(内测体验功能，正式版可能移除) - 在聊天窗口旁扩展了浏览区域，公众号、笔记、链接等内容会在该区域内打开；3、侧边栏新增发现页(内测体验功能，正式版可能移除) - 侧边栏的朋友圈、视频号、搜一搜、小程序等业务入口统一收入了新的发现页。"
     },
     {
-      "name": "阿里云",
-      "category": "云服务",
-      "url": "https://www.aliyun.com",
-      "desc": "云计算平台"
+      "name": "4.1.8.23",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/ktBEoqQ2YS6",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "腾讯云",
-      "category": "云服务",
-      "url": "https://cloud.tencent.com",
-      "desc": "腾讯云服务"
+      "name": "4.1.8.21",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/cLSsSvXM267",
+      "desc": "- 修复一些已知问题。"
+    },
+
+    {
+      "name": "4.1.8.19",
+      "category": "白名单",
+      "url": "https://www.alipan.com/s/PfeFVBumP7u",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "语雀",
-      "category": "文档",
-      "url": "https://www.yuque.com",
-      "desc": "文档协作"
+      "name": "4.1.8.18",
+      "category": "白名单",
+      "url": "https://www.alipan.com/s/xFFFS4bLemu",
+      "desc": "1、新界面样式；2、正在浏览窗口(内测体验功能，正式版可能移除) - 在聊天窗口旁扩展了浏览区域，公众号、笔记、链接等内容会在该区域内打开；3、侧边栏新增发现页(内测体验功能，正式版可能移除) - 侧边栏的朋友圈、视频号、搜一搜、小程序等业务入口统一收入了新的发现页。"
     },
     {
-      "name": "Notion",
-      "category": "文档",
-      "url": "https://www.notion.so",
-      "desc": "知识库"
+      "name": "4.1.7.48",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/uvw6sR68gAm",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "Canva",
-      "category": "设计",
-      "url": "https://www.canva.com",
-      "desc": "在线设计"
+      "name": "4.1.7.30",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/2QmcC1UaVfp",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "Iconfont",
-      "category": "设计",
-      "url": "https://www.iconfont.cn",
-      "desc": "阿里图标库"
+      "name": "4.1.7.26",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/C1PfrbVeu4r",
+      "desc": "- 修复一些已知问题。"
     },
     {
-      "name": "ProcessOn",
-      "category": "工具",
-      "url": "https://www.processon.com",
-      "desc": "在线流程图"
-    },
-    {
-      "name": "Snipaste",
-      "category": "工具",
-      "url": "https://www.snipaste.com",
-      "desc": "截图贴图工具"
+      "name": "4.1.7.25",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/PTj9hfnTaR9",
+      "desc": "- 修复24版本崩溃问题；- 修复一些已知问题。"
     }
   ]
 }

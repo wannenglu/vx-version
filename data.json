@@ -1,6 +1,12 @@
 {
   "resources": [
     {
+      "name": "4.1.9.18",
+      "category": "白名单",
+      "url": "https://www.alipan.com/s/Nt3tn778BTS",
+      "desc": "- 修复公众号页面切换部分会闪退问题；- 表情拖拽发送和首字母英文等问题；- 修复一些已知问题。"
+    },
+    {
       "name": "4.1.9.17",
       "category": "白名单",
       "url": "https://www.alipan.com/s/eFH9CzegUXF",

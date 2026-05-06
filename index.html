@@ -36,24 +36,50 @@
         max-width: 400px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
+      /* 二维码弹窗样式 */
+      .qrcode-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9998;
+      }
+      .qrcode-box {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        max-width: 300px;
+      }
     </style>
   </head>
   <body class="bg-gray-50 min-h-screen">
-    <!-- 密码验证弹窗 -->
+    <!-- 密码验证弹窗（内置二维码） -->
     <div id="passwordModal" class="password-modal">
       <div class="password-box">
         <h2 class="text-xl font-bold mb-4 text-center">请输入访问密码</h2>
 
-        <!-- 密码获取提示（已添加） -->
+        <!-- 密码获取提示 + 公众号二维码 -->
         <div
-          class="mb-4 p-3 bg-green-50 border-l-4 border-green-400 text-sm text-gray-700"
+          class="mb-4 p-3 bg-green-50 border-l-4 border-green-400 text-sm text-gray-700 text-center"
         >
-          <p class="font-medium">💡 密码获取方式：</p>
-          <p>关注公众号 <span class="font-bold text-green-600">路忆派</span></p>
-          <p>
-            发送关键词
-            <span class="font-bold text-green-600">密码</span> 即可获取
+          <p class="font-medium">💡 关注公众号获取密码</p>
+          <p class="my-2">
+            公众号：<span class="font-bold text-green-600">路忆派</span>
           </p>
+          <p>发送关键词：<span class="font-bold text-green-600">密码</span></p>
+          <!-- 密码弹窗里的二维码 -->
+          <img
+            id="pwdQrcodeImg"
+            src=""
+            alt="公众号二维码"
+            class="w-32 h-32 mx-auto my-3 rounded-lg"
+          />
         </div>
 
         <input
@@ -74,19 +100,45 @@
       </div>
     </div>
 
+    <!-- 公众号二维码弹窗（已去掉发送密码提示） -->
+    <div id="qrcodeModal" class="qrcode-modal">
+      <div class="qrcode-box">
+        <h3 class="text-lg font-bold mb-3">关注公众号 路忆派</h3>
+        <img
+          id="qrcodeImg"
+          src=""
+          alt="公众号二维码"
+          class="w-full rounded-lg mb-3"
+        />
+        <button
+          onclick="closeQrcode()"
+          class="mt-4 px-4 py-2 bg-gray-200 rounded-lg"
+        >
+          关闭
+        </button>
+      </div>
+    </div>
+
     <!-- 主内容区域（初始隐藏） -->
     <div id="mainContent" class="max-w-6xl mx-auto px-4 py-8 hidden">
       <h1 class="text-2xl md:text-3xl font-bold mb-6 text-center">
         微信PC端测试历史版本查询
       </h1>
 
-      <!-- 搜索 -->
-      <div class="mb-6">
+      <!-- 顶部：搜索 + 公众号二维码按钮 -->
+      <div class="flex flex-col md:flex-row gap-3 mb-6">
         <input
           id="search"
           placeholder="搜索版本号..."
-          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          class="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
+        <!-- 公众号二维码按钮 -->
+        <button
+          onclick="showQrcode()"
+          class="px-4 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition whitespace-nowrap"
+        >
+          <i class="fa fa-qrcode mr-1"></i> 查看公众号二维码
+        </button>
       </div>
 
       <!-- 列表 -->
@@ -105,24 +157,30 @@
     </div>
 
     <script>
-      // 配置
-      const CORRECT_PASSWORD = "156613";
+      // ==========================================
+      // 【统一维护区：密码 + 二维码地址】
+      // ==========================================
+      const CORRECT_PASSWORD = "156613"; // 你的密码
+      const QRCODE_IMAGE_URL = "ewm.jpg"; // 二维码图片（项目目录）
+      // ==========================================
 
       const pageSize = 12;
       let currentPage = 1;
       let allData = [];
       let filteredData = [];
 
-      // 密码验证功能
+      // 自动设置所有二维码图片
+      document.getElementById("qrcodeImg").src = QRCODE_IMAGE_URL;
+      document.getElementById("pwdQrcodeImg").src = QRCODE_IMAGE_URL;
+
+      // 密码验证
       document
         .getElementById("verifyBtn")
         .addEventListener("click", verifyPassword);
       document
         .getElementById("passwordInput")
         .addEventListener("keypress", function (e) {
-          if (e.key === "Enter") {
-            verifyPassword();
-          }
+          if (e.key === "Enter") verifyPassword();
         });
 
       function verifyPassword() {
@@ -136,10 +194,16 @@
         } else {
           errorMsg.classList.remove("hidden");
           document.getElementById("passwordInput").value = "";
-          setTimeout(() => {
-            errorMsg.classList.add("hidden");
-          }, 3000);
+          setTimeout(() => errorMsg.classList.add("hidden"), 3000);
         }
+      }
+
+      // 公众号二维码弹窗
+      function showQrcode() {
+        document.getElementById("qrcodeModal").style.display = "flex";
+      }
+      function closeQrcode() {
+        document.getElementById("qrcodeModal").style.display = "none";
       }
 
       // 加载数据
@@ -156,20 +220,15 @@
         }
       }
 
-      // 展开/收起 描述
+      // 展开/收起
       function toggleDesc(id) {
         const el = document.getElementById("desc-" + id);
         const btn = document.getElementById("btn-" + id);
-        if (el.style.maxHeight === "none") {
-          el.style.maxHeight = "44px";
-          btn.innerText = "展开";
-        } else {
-          el.style.maxHeight = "none";
-          btn.innerText = "收起";
-        }
+        el.style.maxHeight = el.style.maxHeight === "none" ? "44px" : "none";
+        btn.innerText = el.style.maxHeight === "none" ? "收起" : "展开";
       }
 
-      // 渲染列表 + 分页
+      // 渲染
       function render() {
         const total = filteredData.length;
         const totalPage = Math.ceil(total / pageSize);
@@ -190,47 +249,32 @@
           <h3 class="font-semibold text-lg">${item.name}</h3>
           <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">${item.category}</span>
         </div>
-
         <div class="relative mb-2">
           <div id="desc-${realIndex}" class="desc-content text-sm text-gray-500" style="max-height:44px;">
             ${item.desc || "无备注"}
           </div>
-          ${
-            item.desc && item.desc.length > 50
-              ? `
-            <button id="btn-${realIndex}" onclick="toggleDesc(${realIndex})" class="text-blue-500 text-xs mt-1">
-              展开
-            </button>
-          `
-              : ""
-          }
+          ${item.desc && item.desc.length > 50 ? `<button id="btn-${realIndex}" onclick="toggleDesc(${realIndex})" class="text-blue-500 text-xs mt-1">展开</button>` : ""}
         </div>
-
         <div class="flex justify-between items-center mt-3">
           <a href="${item.url}" target="_blank" class="text-blue-600 hover:underline text-sm">打开</a>
           <button onclick="copy('${item.url}')" class="text-gray-500 text-sm"><i class="fa fa-copy"></i> 复制</button>
         </div>
-      </div>
-    `;
+      </div>`;
             })
             .join("");
         }
 
-        // 分页按钮
+        // 分页
         const pagination = document.getElementById("pagination");
         pagination.innerHTML = "";
         for (let i = 1; i <= totalPage; i++) {
           const btn = document.createElement("button");
           btn.innerText = i;
-          btn.className = `px-3 py-1.5 rounded border ${
-            i === currentPage
-              ? "bg-blue-500 text-white border-blue-500"
-              : "bg-white hover:bg-gray-100"
-          }`;
+          btn.className = `px-3 py-1.5 rounded border ${i === currentPage ? "bg-blue-500 text-white border-blue-500" : "bg-white hover:bg-gray-100"}`;
           btn.onclick = () => {
             currentPage = i;
             render();
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({ top: 0 });
           };
           pagination.appendChild(btn);
         }

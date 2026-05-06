@@ -15,10 +15,67 @@
         overflow: hidden;
         transition: max-height 0.3s ease;
       }
+      /* 密码验证弹窗样式 */
+      .password-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+      .password-box {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
     </style>
   </head>
   <body class="bg-gray-50 min-h-screen">
-    <div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- 密码验证弹窗 -->
+    <div id="passwordModal" class="password-modal">
+      <div class="password-box">
+        <h2 class="text-xl font-bold mb-4 text-center">请输入访问密码</h2>
+
+        <!-- 密码获取提示（已添加） -->
+        <div
+          class="mb-4 p-3 bg-green-50 border-l-4 border-green-400 text-sm text-gray-700"
+        >
+          <p class="font-medium">💡 密码获取方式：</p>
+          <p>关注公众号 <span class="font-bold text-green-600">路忆派</span></p>
+          <p>
+            发送关键词
+            <span class="font-bold text-green-600">密码</span> 即可获取
+          </p>
+        </div>
+
+        <input
+          id="passwordInput"
+          type="password"
+          placeholder="请输入密码"
+          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
+        />
+        <div class="text-red-500 text-sm mb-4 hidden" id="errorMsg">
+          密码错误，请重试
+        </div>
+        <button
+          id="verifyBtn"
+          class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition"
+        >
+          验证并进入
+        </button>
+      </div>
+    </div>
+
+    <!-- 主内容区域（初始隐藏） -->
+    <div id="mainContent" class="max-w-6xl mx-auto px-4 py-8 hidden">
       <h1 class="text-2xl md:text-3xl font-bold mb-6 text-center">
         微信PC端测试历史版本查询
       </h1>
@@ -48,10 +105,42 @@
     </div>
 
     <script>
+      // 配置
+      const CORRECT_PASSWORD = "156613";
+
       const pageSize = 12;
       let currentPage = 1;
       let allData = [];
       let filteredData = [];
+
+      // 密码验证功能
+      document
+        .getElementById("verifyBtn")
+        .addEventListener("click", verifyPassword);
+      document
+        .getElementById("passwordInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            verifyPassword();
+          }
+        });
+
+      function verifyPassword() {
+        const inputPassword = document.getElementById("passwordInput").value;
+        const errorMsg = document.getElementById("errorMsg");
+
+        if (inputPassword === CORRECT_PASSWORD) {
+          document.getElementById("passwordModal").style.display = "none";
+          document.getElementById("mainContent").classList.remove("hidden");
+          loadData();
+        } else {
+          errorMsg.classList.remove("hidden");
+          document.getElementById("passwordInput").value = "";
+          setTimeout(() => {
+            errorMsg.classList.add("hidden");
+          }, 3000);
+        }
+      }
 
       // 加载数据
       async function loadData() {
@@ -102,7 +191,6 @@
           <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">${item.category}</span>
         </div>
 
-        <!-- 描述区域：支持展开收起 -->
         <div class="relative mb-2">
           <div id="desc-${realIndex}" class="desc-content text-sm text-gray-500" style="max-height:44px;">
             ${item.desc || "无备注"}
@@ -166,8 +254,6 @@
         currentPage = 1;
         render();
       });
-
-      loadData();
     </script>
   </body>
 </html>

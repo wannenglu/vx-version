@@ -1,6 +1,12 @@
 {
   "resources": [
     {
+      "name": "4.1.9.50",
+      "category": "无需白名单",
+      "url": "https://www.alipan.com/s/LTyzjHVjuo1",
+      "desc": "- 修复一些已知问题。"
+    },
+    {
       "name": "4.1.9.49",
       "category": "无需白名单",
       "url": "https://www.alipan.com/s/woE8zLesmyq",

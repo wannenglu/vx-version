@@ -1,6 +1,12 @@
 {
   "resources": [
     {
+      "name": "4.1.10.16",
+      "category": "白名单",
+      "url": "https://www.alipan.com/s/Ek3521g4mdp",
+      "desc": "- 在发消息时，支持边写边译为指定的语言；- 修复一些已知问题。"
+    },
+    {
       "name": "4.1.9.55",
       "category": "无需白名单",
       "url": "https://www.alipan.com/s/ueM7BaD5vep",
